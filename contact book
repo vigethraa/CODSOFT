@@ -1,0 +1,85 @@
+contacts = []
+def add_contact():
+    print("\n--- Add Contact ---")
+    name = input("Enter Name: ")
+    phone = input("Enter Phone Number: ")
+    email = input("Enter Email: ")
+    address = input("Enter Address: ")
+    contact = {"name": name, "phone": phone, "email": email, "address": address}
+    contacts.append(contact)
+    print(f"Contact for {name} added successfully!")
+def view_contacts():
+    print("\n--- Contact List ---")
+    if not contacts:
+        print("No contacts found.")
+        return
+
+    for idx, contact in enumerate(contacts, start=1):
+        print(f"{idx}. {contact['name']} - {contact['phone']}")
+def search_contact():
+    print("\n--- Search Contact ---")
+    search = input("Enter Name or Phone Number to search: ")
+
+    found = [contact for contact in contacts if search in contact["name"] or search in contact["phone"]]
+    if found:
+        for contact in found:
+            print(f"Name: {contact['name']}\nPhone: {contact['phone']}\nEmail: {contact['email']}\nAddress: {contact['address']}\n")
+    else:
+        print("No matching contact found.")
+def update_contact():
+    print("\n--- Update Contact ---")
+    search = input("Enter Name or Phone Number of the contact to update: ")
+
+    for contact in contacts:
+        if search in contact["name"] or search in contact["phone"]:
+            print("Contact found. Leave fields blank to keep current value.")
+            contact["name"] = input(f"Enter Name ({contact['name']}): ") or contact["name"]
+            contact["phone"] = input(f"Enter Phone ({contact['phone']}): ") or contact["phone"]
+            contact["email"] = input(f"Enter Email ({contact['email']}): ") or contact["email"]
+            contact["address"] = input(f"Enter Address ({contact['address']}): ") or contact["address"]
+            print("Contact updated successfully!")
+            return
+
+    print("No matching contact found.")
+
+def delete_contact():
+    print("\n--- Delete Contact ---")
+    search = input("Enter Name or Phone Number of the contact to delete: ")
+
+    for contact in contacts:
+        if search in contact["name"] or search in contact["phone"]:
+            contacts.remove(contact)
+            print("Contact deleted successfully!")
+            return
+
+    print("No matching contact found.")
+
+def main_menu():
+    while True:
+        print("\n--- Contact Management System ---")
+        print("1. Add Contact")
+        print("2. View Contact List")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+
+        choice = input("Enter your choice (1-6): ")
+        if choice == "1":
+            add_contact()
+        elif choice == "2":
+            view_contacts()
+        elif choice == "3":
+            search_contact()
+        elif choice == "4":
+            update_contact()
+        elif choice == "5":
+            delete_contact()
+        elif choice == "6":
+            print("Exiting... Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main_menu()
